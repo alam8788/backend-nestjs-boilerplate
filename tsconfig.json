@@ -1,26 +1,33 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
+    "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
+    "esModuleInterop": true,
+    "target": "es2022",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "useUnknownInCatchVariables": false
-  }
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "@nestjs/swagger/plugin"
+      }
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "logs",
+    "uploads/",
+    ".prisma",
+    "data/streaming-assets/**/*",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }

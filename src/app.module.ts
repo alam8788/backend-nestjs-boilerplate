@@ -18,7 +18,7 @@ import { CommonForAllModule } from './modules/common-for-all/common-for-all.modu
 
     ThrottlerModule.forRoot([
       {
-        ttl: 60, // Reset counter after 60 seconds
+        ttl: 60000, // Reset counter after 60 seconds
         limit: 100, // Allow 100 requests per IP in 60s
       },
     ]),

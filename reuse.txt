@@ -1,0 +1,13 @@
+============== logger ( placed outside constructor) ==============
+private readonly logger = new Logger(AuthService.name),
+this.logger.error('', error);
+
+
+============= send response in controller =======
+ sendResponse(res, {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'All Users retrieved successfully',
+        data: result.data,
+        meta: result.meta,
+      });

@@ -4,23 +4,33 @@ import { ApiError } from 'src/common/errors/api-error';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  canActivate(context: ExecutionContext) {
-    try {
-      return super.canActivate(context);
-    } catch (error) {
+  handleRequest(err: any, user: any, info: any, context: ExecutionContext) {
+    // Token expired
+    if (info?.name === 'TokenExpiredError') {
+      throw new ApiError(HttpStatus.UNAUTHORIZED, 'Token has expired');
+    }
+
+    // Malformed token
+    if (info?.name === 'JsonWebTokenError') {
+      throw new ApiError(HttpStatus.UNAUTHORIZED, 'Invalid token format');
+    }
+
+    // No token provided
+    if (info?.message === 'No auth token') {
       throw new ApiError(
         HttpStatus.UNAUTHORIZED,
         'Authorization token is required',
       );
     }
-  }
 
-  handleRequest(err: any, user: any, info: any) {
-    if (err || !user) {
-      throw new ApiError(
-        HttpStatus.UNAUTHORIZED,
-        info?.message || 'Invalid or expired token',
-      );
+    // Other errors during validation
+    if (err) {
+      throw new ApiError(HttpStatus.UNAUTHORIZED, 'Authentication failed');
+    }
+
+    // No user found
+    if (!user) {
+      throw new ApiError(HttpStatus.UNAUTHORIZED, 'Invalid or expired token');
     }
 
     return user;

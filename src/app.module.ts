@@ -8,6 +8,8 @@ import { LoggerModule } from './common/logger/logger.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { HealthModule } from './health/health.module';
 import { CommonForAllModule } from './modules/common-for-all/common-for-all.module';
+import { MailModule } from './modules/mail/mail.module';
+import { SecurityModule } from './core/security/security.module';
 
 @Module({
   imports: [
@@ -39,11 +41,16 @@ import { CommonForAllModule } from './modules/common-for-all/common-for-all.modu
     HealthModule,
     PrismaModule,
     CommonForAllModule,
+    SecurityModule,
+    MailModule,
   ],
   controllers: [AppController],
-  providers: [AppService, {
+  providers: [
+    AppService,
+    {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
-    },],
+    },
+  ],
 })
 export class AppModule {}
